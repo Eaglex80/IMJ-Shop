@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:imj_shop/providers/cart.dart';
+import 'package:imj_shop/providers/orders.dart';
+import 'package:imj_shop/screens/cart_screen.dart';
 import 'package:provider/provider.dart';
 
 import './providers/products.dart';
@@ -14,7 +17,13 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(
             create: (context) => Products(),
-          )
+          ),
+          ChangeNotifierProvider(
+            create: (context) => Cart(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => Orders(),
+          ),
         ],
         child: MaterialApp(
           title: 'IMJ Shop',
@@ -26,6 +35,7 @@ class MyApp extends StatelessWidget {
           ),
           routes: {
             ProductDetailScreen.routeName: (_) => ProductDetailScreen(),
+            CartScreen.routeName: (_) => CartScreen(),
           },
           home: ProductsOverviewScreen(),
         ));
