@@ -27,7 +27,7 @@ class Cart with ChangeNotifier {
           CartItem(id: existingCartItem.id,
               title: existingCartItem.title,
               quantity: existingCartItem.quantity + 1,
-              price: existingCartItem.price))
+              price: existingCartItem.price));
     } else {
       _items.putIfAbsent(
           productId,
