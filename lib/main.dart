@@ -11,6 +11,7 @@ import './screens/edit_product_screen.dart';
 import './screens/orders_screen.dart';
 import './screens/product_detail_screen.dart';
 import './screens/products_overview_screen.dart';
+import 'screens/splash_screen.dart';
 import 'screens/user_product_screen.dart';
 
 void main() => runApp(MyApp());
@@ -18,6 +19,8 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    String token;
+    String userId;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
@@ -56,7 +59,15 @@ class MyApp extends StatelessWidget {
             UserProductScreen.routeName: (context) => UserProductScreen(),
             EditProductScreen.routeName: (context) => EditProductScreen(),
           },
-          home: auth.isAuth ? ProductsOverviewScreen() : AuthScreen(),
+          home: auth.isAuth
+              ? ProductsOverviewScreen()
+              : FutureBuilder(
+                  future: auth.tryAuthLogin(),
+                  builder: (context, authResultSnapshot) =>
+                      authResultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? SplashScreen()
+                          : AuthScreen()),
         ),
       ),
     );
